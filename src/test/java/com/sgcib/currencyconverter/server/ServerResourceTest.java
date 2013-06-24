@@ -1,5 +1,6 @@
-package com.sgcib.currencyconverter.converter;
+package com.sgcib.currencyconverter.server;
 
+import com.sgcib.currencyconverter.server.ServerResource;
 import org.junit.Test;
 
 import javax.ws.rs.WebApplicationException;

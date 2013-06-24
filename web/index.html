@@ -1,1 +1,24 @@
-<h1>Currency Converter</h1>
+<html>
+    <head>
+        <title>Currency Converter</title>
+    </head>
+<body>
+    <h1>Currency Converter</h1>
+    <form>
+        <input id="quantity" type="text" name="quantity" placeholder="EUR"/>
+        <input id="convert" type="button" value="convert"/>
+    </form>
+    <span id="result"></span>
+    <script src="components/jquery/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#convert').click(function() {
+                var quantity = $('input[id=quantity]').val();
+                $.getJSON('/convert?amount=' + quantity, function(money) {
+                    $('#result').html(money.quantity + ' ' + money.currency)
+                });
+            });
+        });
+    </script>
+</body>
+</html>

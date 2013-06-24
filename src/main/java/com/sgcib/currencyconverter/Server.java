@@ -2,14 +2,15 @@ package com.sgcib.currencyconverter;
 
 import com.google.common.base.Throwables;
 import com.sgcib.currencyconverter.converter.ConverterResource;
-import com.sgcib.currencyconverter.converter.ServerResource;
+import com.sgcib.currencyconverter.server.ServerResource;
 import com.sun.net.httpserver.HttpServer;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.glassfish.jersey.jdkhttp.JdkHttpServerFactory.createHttpServer;
 
@@ -33,6 +34,7 @@ public class Server {
     }
 
     public static void main(String[] args)  {
+        Logger.getLogger("org.glassfish").setLevel(Level.OFF);
         new Server().start();
     }
 

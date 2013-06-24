@@ -1,4 +1,4 @@
-package com.sgcib.currencyconverter.converter;
+package com.sgcib.currencyconverter.server;
 
 import com.google.common.annotations.VisibleForTesting;
 
@@ -10,7 +10,7 @@ import javax.ws.rs.WebApplicationException;
 import java.io.File;
 import java.io.IOException;
 
-import static javax.ws.rs.core.MediaType.TEXT_HTML;
+import static com.sgcib.currencyconverter.server.MediaType.*;
 
 @Path("/")
 public class ServerResource {
@@ -27,13 +27,27 @@ public class ServerResource {
     @GET
     @Produces(TEXT_HTML)
     public File serverIndex() {
-        return serveFile("index.html");
+        return serveHtml("index.html");
     }
 
     @GET
     @Produces(TEXT_HTML)
     @Path("{path : .*\\.html}")
-    public File serveFile(@PathParam("path") String path) {
+    public File serveHtml(@PathParam("path") String path) {
+        return getFile(path);
+    }
+
+    @GET
+    @Produces(TEXT_CSS)
+    @Path("{path : .*\\.css}")
+    public File serveCss(@PathParam("path") String path) {
+        return getFile(path);
+    }
+
+    @GET
+    @Produces(APPLICATION_JAVASCRIPT)
+    @Path("{path : .*\\.js}")
+    public File serveJavascript(@PathParam("path") String path) {
         return getFile(path);
     }
 

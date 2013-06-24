@@ -1,24 +1,17 @@
 package com.sgcib.currencyconverter.converter;
 
-import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class Money {
-    private float quantity;
-    private String currency;
+    @JsonProperty public double quantity;
+    @JsonProperty public String currency;
 
-    @JsonCreator
-    public Money(@JsonProperty("quantity") float quantity,@JsonProperty("currency") String currency) {
+    public Money() {
+    }
+
+    public Money( double quantity, String currency) {
         this.quantity = quantity;
         this.currency = currency;
-    }
-
-    public float getQuantity() {
-        return quantity;
-    }
-
-    public String getCurrency() {
-        return currency;
     }
 
     @Override
@@ -28,4 +21,5 @@ public class Money {
             ", currency='" + currency + '\'' +
             '}';
     }
+
 }
