@@ -1,21 +1,36 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <title>Currency Converter</title>
     </head>
+    <link href="components/bootstrap/bootstrap.css" rel="stylesheet" media="screen">
+    <style>
+        form {
+            margin-top:40px;
+        }
+    </style>
 <body>
-    <h1>Currency Converter</h1>
-    <form>
-        <input id="quantity" type="text" name="quantity" placeholder="EUR"/>
-        <input id="convert" type="button" value="convert"/>
-    </form>
-    <span id="result"></span>
+    <h1 class="text-center">Currency Converter</h1>
+    <div class="text-center">
+        <form class="form-inline">
+            <div class="input-prepend">
+                <span class="add-on">EUR</span>
+                <input id="quantity" type="text" name="quantity" placeholder="0.00" class="span2"/>
+            </div>
+            <input id="convert" type="button" value="convert" class="btn btn-primary"/>
+            <div class="input-prepend">
+                <span class="add-on">USD</span>
+                <input id="result" type="text" class="span2 uneditable-input" readonly/>
+            </div>
+        </form>
+    </div>
     <script src="components/jquery/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
             convert = function() {
                 var quantity = $('input[id=quantity]').val();
                 $.getJSON(window.location.pathname + '/convert?amount=' + quantity, function(money) {
-                    $('#result').html(Math.round(money.quantity*100)/100 + ' ' + money.currency)
+                    $('#result').val(Math.round(money.quantity*100)/100)
                 });
             }
             $("input").keypress(function(event) {
