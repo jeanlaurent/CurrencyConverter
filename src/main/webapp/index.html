@@ -14,7 +14,7 @@
         $(document).ready(function() {
             $('#convert').click(function() {
                 var quantity = $('input[id=quantity]').val();
-                $.getJSON('/convert?amount=' + quantity, function(money) {
+                $.getJSON(window.location.pathname + '/convert?amount=' + quantity, function(money) {
                     $('#result').html(money.quantity + ' ' + money.currency)
                 });
             });
