@@ -14,25 +14,33 @@
     <div class="text-center">
         <form class="form-inline">
             <div class="input-prepend">
+
                 <span class="add-on">EUR</span>
+
                 <input id="quantity" type="text" name="quantity" placeholder="0.00" class="span2"/>
+
             </div>
             <input id="convert" type="button" value="convert" class="btn btn-primary"/>
             <div class="input-prepend">
+
                 <span class="add-on">USD</span>
+
                 <input id="result" type="text" class="span2 uneditable-input" readonly/>
+
             </div>
         </form>
     </div>
     <script src="components/jquery/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
+            
             convert = function() {
                 var quantity = $('input[id=quantity]').val();
                 $.getJSON(window.location.pathname + '/convert?amount=' + quantity, function(money) {
                     $('#result').val(Math.round(money.quantity*100)/100)
                 });
             }
+
             $("input").keypress(function(event) {
                 if (event.which == 13) {
                     event.preventDefault();
