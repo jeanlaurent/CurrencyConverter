@@ -12,11 +12,20 @@
     <script src="components/jquery/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#convert').click(function() {
+            convert = function() {
                 var quantity = $('input[id=quantity]').val();
                 $.getJSON(window.location.pathname + '/convert?amount=' + quantity, function(money) {
-                    $('#result').html(money.quantity + ' ' + money.currency)
+                    $('#result').html(Math.round(money.quantity*100)/100 + ' ' + money.currency)
                 });
+            }
+            $("input").keypress(function(event) {
+                if (event.which == 13) {
+                    event.preventDefault();
+                    convert();
+                }
+            });
+            $('#convert').click(function() {
+                convert();
             });
         });
     </script>
