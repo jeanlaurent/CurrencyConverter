@@ -1,9 +1,13 @@
 #!/bin/sh
 # deploy to tomcat installed via brew
-tomcat_home=/usr/local/Cellar/tomcat/7.0.41
-target=$tomcat_home/libexec/webapps
-package=CurrencyConverter-1.0-SNAPSHOT
 
+if [ -z "$tomcat_home" ]; then
+	echo 'tomcat_home not set, setting my own.'
+	tomcat_home=/usr/local/Cellar/tomcat/7.0.41
+fi
+
+target=$tomcat_home/libexec/webapps
+package=CurrencyConverter-1.0-SNAPSHOT	
 
  function display {
  	echo ""
