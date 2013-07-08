@@ -1,7 +1,9 @@
 #!/bin/sh
 # deploy to tomcat installed via brew
-target=/usr/local/Cellar/tomcat/7.0.41/libexec/webapps
+tomcat_home=/usr/local/Cellar/tomcat/7.0.41
+target=$tomcat_home/libexec/webapps
 package=CurrencyConverter-1.0-SNAPSHOT
+
 
  function display {
  	echo ""
@@ -9,9 +11,8 @@ package=CurrencyConverter-1.0-SNAPSHOT
     echo ""
 }
 
-
 display "Stopping tomcat"
-catalina stop
+$tomcat_home/bin/catalina stop
 
 display "Intalling new package"
 rm -rf  $target/$package/
@@ -19,6 +20,6 @@ rm $target/*.war
 cp -v ./target/$package.war $target
 
 display "Starting tomcat"
-catalina start
+$tomcat_home/bin/catalina start
 
 display "done."
