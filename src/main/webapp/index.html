@@ -36,7 +36,7 @@
             
             convert = function() {
                 var quantity = $('input[id=quantity]').val();
-                $.getJSON(window.location.pathname + '/convert?amount=' + quantity, function(money) {
+                $.getJSON('convert?amount=' + quantity, function(money) {
                     $('#result').val(Math.round(money.quantity*100)/100)
                 });
             }

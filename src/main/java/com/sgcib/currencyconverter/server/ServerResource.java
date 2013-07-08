@@ -61,11 +61,8 @@ public class ServerResource {
         File file = new File(webHome, path);
         if (!exist(file)) {
             try {
-                System.out.println(path);
-                System.out.println(getClass().getClassLoader().getResource(path));
-                System.out.println("before getResource");
                 URL url = Resources.getResource(path);
-                System.out.println(url);
+                System.out.println("serving : " + path);
                 return Response.ok(url.openStream()).build();
             } catch (IOException | IllegalArgumentException exception) {
                 System.out.println("FAIL");
@@ -73,6 +70,7 @@ public class ServerResource {
                 throw new WebApplicationException(404);
             }
         }
+        System.out.println("serving : " + file);
         return Response.ok(file).build();
     }
 

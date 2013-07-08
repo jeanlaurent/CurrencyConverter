@@ -15,7 +15,7 @@ public class ConverterResource {
 
     @GET
     @Produces(APPLICATION_JSON)
-    public Money convert(@DefaultValue("0") @QueryParam("amount")double amount) {
+    public Money convert(@DefaultValue("0") @QueryParam("amount") double amount) {
         return new Money(amount * 1.309f, "USD");
     }
 
