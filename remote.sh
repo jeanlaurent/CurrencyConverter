@@ -25,14 +25,15 @@ package=CurrencyConverter-1.0-SNAPSHOT
 
 
 display "Stopping tomcat"
-$tomcat_home/bin/catalina.sh stop
+service tomcat7 stop
 
 display "Intalling new package"
 rm -rf  $target/$package/
-rm $target/*.war
+rm $target/$package.war
+echo $src
 cp -v $src/$package.war $target
 
 display "Starting tomcat"
-$tomcat_home/bin/catalina.sh start
+service tomcat7 start
 
 display "done."
