@@ -1,29 +1,23 @@
 #!/bin/sh
-# deploy to tomcat installed via brew
+vagrant ssh-config > ssh-config-vagrant
 
-if [ -z "$tomcat_home" ]; then
-	echo 'tomcat_home not set, setting my own.'
-	tomcat_home=/usr/local/Cellar/tomcat/7.0.41/libexec
-fi
+host=10.11.12.13
+warfile=CurrencyConverter-1.0-SNAPSHOT.war
+tomcatroot=/var/lib/tomcat7
+webapps=$tomcatroot/webapps/
+vm=precise64
 
-target=$tomcat_home/webapps
-package=CurrencyConverter-1.0-SNAPSHOT	
+#mvn clean install
+# war file
+scp -F ssh-config-vagrant target/$warfile $vm:~
+ssh -t -F ssh-config-vagrant $vm "sudo cp ~/$warfile $tomcatroot"
 
- function display {
- 	echo ""
-    echo "* $1"
-    echo ""
-}
+# root.xml
+scp -F ssh-config-vagrant src/conf/ROOT.xml $vm:~
+ssh -t -F ssh-config-vagrant $vm "sudo cp ~/ROOT.xml $tomcatroot/conf/Catalina/localhost/"
 
-display "Stopping tomcat"
-$tomcat_home/bin/catalina.sh stop
+# restart
+ssh -t -F ssh-config-vagrant $vm "sudo service tomcat7 restart"
 
-display "Intalling new package"
-rm -rf  $target/$package/
-rm $target/*.war
-cp -v ./target/$package.war $target
-
-display "Starting tomcat"
-$tomcat_home/bin/catalina.sh start
-
-display "done."
+# test
+curl --head http://$host:8080
