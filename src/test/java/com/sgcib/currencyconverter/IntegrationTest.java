@@ -2,32 +2,26 @@ package com.sgcib.currencyconverter;
 
 
 import com.google.common.base.Predicate;
-import com.google.common.base.Strings;
 import org.fluentlenium.adapter.FluentTest;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import static com.google.common.base.Strings.*;
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static org.fest.assertions.Assertions.assertThat;
 
-//Test currently does not pass under maven
-// But runs fine in IDEA.
-// We're looking into it.
-@Ignore
 public class IntegrationTest extends FluentTest {
-    private static EmbeddedTomcat embeddedTomcat;
+    private static EmbeddedJetty jetty;
 
     @BeforeClass
     public static void startupTomcat() throws Exception {
-        embeddedTomcat = new EmbeddedTomcat();
-        embeddedTomcat.start();
+        jetty = new EmbeddedJetty();
+        jetty.start();
     }
 
     @AfterClass
     public static void shutdownTomcat() throws Exception {
-        embeddedTomcat.stop();
+        jetty.stop();
     }
 
     @Test
