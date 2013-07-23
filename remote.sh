@@ -32,7 +32,6 @@ rootfile=ROOT.xml
 rm -rf  $target/$package/
 rm $target/$package.war
 echo $src
-cp -v $src/$package.war $target
 cp -v $rootfile $tomcat_home/conf/Catalina/localhost
 
 display "Starting tomcat"

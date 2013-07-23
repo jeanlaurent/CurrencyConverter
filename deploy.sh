@@ -20,4 +20,4 @@ ssh -t -F ssh-config-vagrant $vm "sudo ./remote.sh . $tomcatroot"
 ssh -t -F ssh-config-vagrant $vm "sudo service tomcat7 restart"
 
 # test
-curl --head http://$host:8080/CurrencyConverter-1.0-SNAPSHOT/index.html
+curl --head http://$host:8080/index.html
