@@ -16,6 +16,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>webapp</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
 </web-app>
