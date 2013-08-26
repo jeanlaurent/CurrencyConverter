@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+// this test is now redundant
 
 public class ConverterResourceTest extends JerseyTest {
 
@@ -25,10 +26,19 @@ public class ConverterResourceTest extends JerseyTest {
     @Test
     public void should_convert_EUR_to_USD() {
         WebTarget target = target();
-        Money money = target.path("convert").queryParam("amount","10").request().get(Money.class);
+        Money money = target.path("convert/EUR/USD").queryParam("amount","10").request().get(Money.class);
         assertThat(money.currency).isEqualTo("USD");
-        assertThat(money.quantity).isEqualTo(13.09f);
+        assertThat(money.quantity).isEqualTo(13.09d);
     }
+
+    @Test
+    public void should_convert_USD_to_EUR() {
+        WebTarget target = target();
+        Money money = target.path("convert/USD/EUR").queryParam("amount","10").request().get(Money.class);
+        assertThat(money.currency).isEqualTo("EUR");
+        assertThat(money.quantity).isEqualTo(7.485d);
+    }
+
 
     @Override
     protected Application configure() {

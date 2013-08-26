@@ -8,35 +8,53 @@
         form {
             margin-top:40px;
         }
+        select {
+            font-size:12px;
+        }
     </style>
 <body>
-    <h1 class="text-center">Currency Converter</h1>
-    <div class="text-center">
-        <form class="form-inline">
-            <div class="input-prepend">
+<div class="container">
+    <div class="row">
 
-                <span class="add-on">EUR</span>
-
-                <input id="quantity" type="text" name="quantity" placeholder="0.00" class="span2"/>
-
-            </div>
-            <input id="convert" type="button" value="convert" class="btn btn-primary"/>
-            <div class="input-prepend">
-
-                <span class="add-on">USD</span>
-
-                <input id="result" type="text" class="span2 uneditable-input" readonly/>
-
-            </div>
-        </form>
+        <h1 class="text-center span9">Currency Converter</h1>
     </div>
+    <div class="row">
+        <div>
+
+            <form class="form-inline text-center">
+
+                <input id="quantity" type="text" name="quantity" placeholder="0.00" class="span1"/>
+                <select id="fromCurrency" class="span1">
+                    <option>EUR</option>
+                    <option>USD</option>
+                </select>
+
+
+                <input id="convert" type="button" value=">> convert >>" class="btn btn-primary"/>
+
+                <input id="result" type="text" class="span1 uneditable-input" readonly/>
+                <select id="toCurrency" class="span1">
+                    <option>USD</option>
+                    <option>EUR</option>
+                </select>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
     <script src="components/jquery/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
             
             convert = function() {
                 var quantity = $('input[id=quantity]').val();
-                $.getJSON('rest/convert?amount=' + quantity, function(money) {
+                var fromCurrency = $('select[id=fromCurrency]').val();
+                var toCurrency = $('select[id=toCurrency]').val();
+
+                $.getJSON('api/convert/' + fromCurrency + '/' + toCurrency + '?amount=' + quantity, function(money) {
                     $('#result').val(Math.round(money.quantity*100)/100)
                 });
             }
@@ -47,6 +65,7 @@
                     convert();
                 }
             });
+
             $('#convert').click(function() {
                 convert();
             });

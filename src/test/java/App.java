@@ -1,20 +1,15 @@
-import com.google.common.base.Throwables;
-import com.sgcib.currencyconverter.Server;
-import com.sun.net.httpserver.HttpServer;
+import com.sgcib.currencyconverter.EmbeddedJetty;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import static org.glassfish.jersey.jdkhttp.JdkHttpServerFactory.createHttpServer;
+import static com.google.common.base.Throwables.*;
 
 public class App {
 
-
     public static void main(String[] args) {
         try {
-            HttpServer httpServer = createHttpServer(new URI("http://localhost:8282/"), new Server());
-        } catch (URISyntaxException use) {
-            Throwables.propagate(use);
+            new EmbeddedJetty(8282).startAndJoin();
+        } catch (Exception use) {
+            propagate(use);
         }
     }
+
 }
