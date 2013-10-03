@@ -4,3 +4,6 @@ target
 .DS_Store
 .vagrant
 ssh-config-vagrant
+.classpath
+.project
+.settings/
