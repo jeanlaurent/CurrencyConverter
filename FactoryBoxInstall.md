@@ -1,11 +1,24 @@
 #Factory Box  Install 
 sudo aptitude update
 
+# install various utilities
+sudo aptitude install curl, unzip
+
+# install git
+sudo aptitude install git
+git config --global user.email "someone@sgcib.com"
+git config --global user.name "factory"
+
 # install jdk7
 sudo aptitude install openjdk-7-jdk
 
-# install various utilities
-sudo aptitude install curl, unzip
+# install maven
+curl -O http://mirrors.linsrv.net/apache/maven/maven-3/3.1.0/binaries/apache-maven-3.1.0-bin.tar.gz
+sudo tar zxvf apache-maven-3.1.0-bin.tar.gz -C /opt/
+cd /opt
+sudo ln -s apache-maven-3.1.0 maven
+cd
+echo "PATH=$PATH:/opt/maven/bin">> '.bashrc' && source .bashrc
 
 # install puppet 3
 wget http://apt.puppetlabs.com/puppetlabs-release-precise.deb
