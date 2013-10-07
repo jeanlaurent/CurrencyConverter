@@ -7,12 +7,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.concurrent.TimeUnit;
-
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static org.fest.assertions.Assertions.assertThat;
-import static org.fluentlenium.core.filter.FilterConstructor.withId;
-import static org.fluentlenium.core.filter.FilterConstructor.withName;
 import static org.fluentlenium.core.filter.FilterConstructor.withText;
 
 public class IntegrationTest extends FluentTest {
@@ -48,7 +44,6 @@ public class IntegrationTest extends FluentTest {
         waitForValue(2000, "#result");
         assertThat(find("#result").getValue()).isEqualTo("2.99");
     }
-
 
     private void waitForValue(int timeInMillis, final String target) {
         await().atMost(timeInMillis).until(new Predicate() {
