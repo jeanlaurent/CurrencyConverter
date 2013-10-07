@@ -1,0 +1,23 @@
+# Continuous Delivery Workshop SlideDEck
+
+# What is continous delivery ?
+
+Reduce the COST, TIME & RISK
+of delivering INCREMENTAL CHANGES to users
+
+# What's the difference for continous deployment ?
+
+
+How long would it take your organisation to deploy a change that involved just ONE SINGLE LINE Of code ?
+
+Do you do this on repeatable, reliable basis ?
+
+
+# Tip Of the IceBerg ?
+
+
+
+notes :
+http://fr.slideshare.net/jezhumble/21-century-software
+Slides 25,27,30
+
