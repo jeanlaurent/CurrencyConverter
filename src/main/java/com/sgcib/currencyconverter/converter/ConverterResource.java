@@ -7,8 +7,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-import static com.sgcib.currencyconverter.server.MediaType.APPLICATION_JSON;
-
 @Path("/convert")
 public class ConverterResource {
     private final CurrencyConverter currencyConverter;
@@ -18,7 +16,7 @@ public class ConverterResource {
     }
 
     @GET
-    @Produces(APPLICATION_JSON)
+    @Produces("application/json;charset=UTF-8")
     @Path("/{fromCurrency}/{toCurrency}")
     public Money convert(@DefaultValue("0") @QueryParam("amount") double amount,
                          @PathParam("fromCurrency") String fromCurrency,
