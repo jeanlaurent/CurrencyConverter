@@ -15,15 +15,43 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+
 // copied from https://gist.github.com/dgageot/4957186
 
 class PhantomJsDownloader {
     private final boolean isWindows;
     private final boolean isMac;
+    private final boolean isLinux64;
 
     PhantomJsDownloader() {
         isWindows = System.getProperty("os.name").startsWith("Windows");
         isMac = System.getProperty("os.name").startsWith("Mac OS X");
+        isLinux64 = System.getProperty("sun.arch.data.model").equals("64");
+    }
+
+    private static void unzip(File zip, File toDir) throws IOException {
+        final ZipFile zipFile = new ZipFile(zip);
+        try {
+            Enumeration<? extends ZipEntry> entries = zipFile.entries();
+            while (entries.hasMoreElements()) {
+                final ZipEntry entry = entries.nextElement();
+                if (entry.isDirectory()) {
+                    continue;
+                }
+
+                File to = new File(toDir, entry.getName());
+                to.getParentFile().mkdirs();
+
+                Files.copy(new InputSupplier<InputStream>() {
+                    @Override
+                    public InputStream getInput() throws IOException {
+                        return zipFile.getInputStream(entry);
+                    }
+                }, to);
+            }
+        } finally {
+            zipFile.close();
+        }
     }
 
     public File downloadAndExtract() {
@@ -37,11 +65,13 @@ class PhantomJsDownloader {
         } else if (isMac) {
             url = "http://phantomjs.googlecode.com/files/phantomjs-1.8.1-macosx.zip";
             phantomJsExe = new File(installDir, "phantomjs-1.8.1-macosx/bin/phantomjs");
+        } else if (isLinux64) {
+            url = "http://phantomjs.googlecode.com/files/phantomjs-1.9.0-linux-x86_64.tar.bz2";
+            phantomJsExe = new File(installDir, "phantomjs-1.9.0-linux-x86_64/bin/phantomjs");
         } else {
-            url = "http://phantomjs.googlecode.com/files/phantomjs-1.8.1-linux-x86_64.tar.bz2";
-            phantomJsExe = new File(installDir, "phantomjs-1.8.1-linux-x86_64/bin/phantomjs");
+            url = "http://phantomjs.googlecode.com/files/phantomjs-1.9.0-linux-i686.tar.bz2";
+            phantomJsExe = new File(installDir, "phantomjs-1.9.0-linux-i686/bin/phantomjs");
         }
-
         extractExe(url, installDir, phantomJsExe);
 
         return phantomJsExe;
@@ -62,6 +92,7 @@ class PhantomJsDownloader {
             } else if (isMac) {
                 new ProcessBuilder().command("/usr/bin/unzip", "-qo", "phantomjs.zip").directory(phantomInstallDir).start().waitFor();
             } else {
+                // sometimes tar is in /bin/tar...
                 new ProcessBuilder().command("/usr/bin/tar", "-xjvf", "phantomjs.zip").directory(phantomInstallDir).start().waitFor();
             }
         } catch (Exception e) {
@@ -89,30 +120,5 @@ class PhantomJsDownloader {
         }
 
         zipTemp.renameTo(targetZip);
-    }
-
-    private static void unzip(File zip, File toDir) throws IOException {
-        final ZipFile zipFile = new ZipFile(zip);
-        try {
-            Enumeration<? extends ZipEntry> entries = zipFile.entries();
-            while (entries.hasMoreElements()) {
-                final ZipEntry entry = entries.nextElement();
-                if (entry.isDirectory()) {
-                    continue;
-                }
-
-                File to = new File(toDir, entry.getName());
-                to.getParentFile().mkdirs();
-
-                Files.copy(new InputSupplier<InputStream>() {
-                    @Override
-                    public InputStream getInput() throws IOException {
-                        return zipFile.getInputStream(entry);
-                    }
-                }, to);
-            }
-        } finally {
-            zipFile.close();
-        }
     }
 }
