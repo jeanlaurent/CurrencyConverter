@@ -11,7 +11,7 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fluentlenium.core.filter.FilterConstructor.withText;
 
-public class IntegrationTest extends FluentTest {
+public class IntegrationTest extends PhantomJsTest {
     private static EmbeddedJetty jetty;
 
     @BeforeClass
@@ -54,4 +54,8 @@ public class IntegrationTest extends FluentTest {
         });
     }
 
+    @Override
+    protected String defaultUrl() {
+        return "http://localhost:8181/";
+    }
 }
