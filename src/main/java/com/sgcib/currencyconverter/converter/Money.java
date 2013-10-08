@@ -28,9 +28,7 @@ public class Money {
         if (o == null || getClass() != o.getClass()) return false;
 
         Money money = (Money) o;
-        double difference = Math.abs(money.quantity - quantity);
-        if (difference > 0.000001) 
-        	return false;
+        if ( Math.abs(money.quantity - quantity) > 0.000001 ) return false;
         if (currency != null ? !currency.equals(money.currency) : money.currency != null) return false;
 
         return true;
