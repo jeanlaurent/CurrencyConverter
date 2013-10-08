@@ -1,12 +1,13 @@
 #!/bin/sh
-vagrant ssh-config > ssh-config-vagrant
+vagrant ssh-config target > ssh-config-vagrant
 
-host=10.11.12.13
+host=10.10.10.11
+vm=target
+
 warfile=CurrencyConverter-1.0-SNAPSHOT.war
 tomcatroot=/var/lib/tomcat7
 rootfile=src/conf/ROOT.xml
 webapps=$tomcatroot/webapps/
-vm=precise64
 
 mvn clean install
 
