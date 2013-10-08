@@ -15,6 +15,7 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+
 // copied from https://gist.github.com/dgageot/4957186
 
 class PhantomJsDownloader {
@@ -24,6 +25,31 @@ class PhantomJsDownloader {
     PhantomJsDownloader() {
         isWindows = System.getProperty("os.name").startsWith("Windows");
         isMac = System.getProperty("os.name").startsWith("Mac OS X");
+    }
+
+    private static void unzip(File zip, File toDir) throws IOException {
+        final ZipFile zipFile = new ZipFile(zip);
+        try {
+            Enumeration<? extends ZipEntry> entries = zipFile.entries();
+            while (entries.hasMoreElements()) {
+                final ZipEntry entry = entries.nextElement();
+                if (entry.isDirectory()) {
+                    continue;
+                }
+
+                File to = new File(toDir, entry.getName());
+                to.getParentFile().mkdirs();
+
+                Files.copy(new InputSupplier<InputStream>() {
+                    @Override
+                    public InputStream getInput() throws IOException {
+                        return zipFile.getInputStream(entry);
+                    }
+                }, to);
+            }
+        } finally {
+            zipFile.close();
+        }
     }
 
     public File downloadAndExtract() {
@@ -89,30 +115,5 @@ class PhantomJsDownloader {
         }
 
         zipTemp.renameTo(targetZip);
-    }
-
-    private static void unzip(File zip, File toDir) throws IOException {
-        final ZipFile zipFile = new ZipFile(zip);
-        try {
-            Enumeration<? extends ZipEntry> entries = zipFile.entries();
-            while (entries.hasMoreElements()) {
-                final ZipEntry entry = entries.nextElement();
-                if (entry.isDirectory()) {
-                    continue;
-                }
-
-                File to = new File(toDir, entry.getName());
-                to.getParentFile().mkdirs();
-
-                Files.copy(new InputSupplier<InputStream>() {
-                    @Override
-                    public InputStream getInput() throws IOException {
-                        return zipFile.getInputStream(entry);
-                    }
-                }, to);
-            }
-        } finally {
-            zipFile.close();
-        }
     }
 }
