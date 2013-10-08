@@ -9,6 +9,8 @@ import javax.ws.rs.QueryParam;
 
 @Path("/convert")
 public class ConverterResource {
+    public static final String APPLICATION_JSON = "application/json;charset=UTF-8";
+
     private final CurrencyConverter currencyConverter;
 
     public ConverterResource() {
@@ -16,7 +18,7 @@ public class ConverterResource {
     }
 
     @GET
-    @Produces("application/json;charset=UTF-8")
+    @Produces(APPLICATION_JSON)
     @Path("/{fromCurrency}/{toCurrency}")
     public Money convert(@DefaultValue("0") @QueryParam("amount") double amount,
                          @PathParam("fromCurrency") String fromCurrency,
