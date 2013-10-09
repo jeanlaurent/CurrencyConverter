@@ -21,6 +21,14 @@ Vagrant.configure("2") do |config|
       target_config.vm.hostname = "target"
       target_config.vm.network :private_network, ip: "10.10.10.11"
       target_config.vm.provision "puppet"
+      # target_config.vm.memory_size = 1024
+  end
+
+  config.vm.provider "virtualbox" do |vbox|
+    vbox.customize [ 
+                      "modifyvm", :id,
+                      "--memory", "2048",
+                    ]
   end
 
 end

@@ -1,6 +1,7 @@
 #!/bin/bash
 # deploy to tomcat installed via brew
-src=./target
+
+package=CurrencyConverter-1.0-SNAPSHOT	
 
 function display {
  	echo ""
@@ -10,31 +11,21 @@ function display {
 
 if [ -z "$tomcat_home" ]; then
 	tomcat_home=/usr/local/Cellar/tomcat/7.0.41/libexec
-	if [ -n "$2" ]; then
-    	tomcat_home=$2
+	if [ -n "$1" ]; then
+    	tomcat_home=$1
 	fi
 fi
 echo "tomcat_home is now $tomcat_home"
 
-if [ -n "$1" ]; then
-    src=$1
-fi
+webapp=$tomcat_home/webapps
 
-target=$tomcat_home/webapps
-package=CurrencyConverter-1.0-SNAPSHOT	
-
-
-display "Stopping tomcat"
 service tomcat7 stop
 
-display "Intalling new package"
-rootfile=ROOT.xml
-rm -rf  $target/$package/
-rm $target/$package.war
-echo $src
-cp -v $rootfile $tomcat_home/conf/Catalina/localhost
+display "removing old packages and configuration"
+rm -rf  $webapp/$package/
+rm $tomcat_home/conf/Catalina/localhost/ROOT.xml
 
-display "Starting tomcat"
+display "Intalling new ROOT "
+cp -v /vagrant/src/conf/ROOT.xml $tomcat_home/conf/Catalina/localhost
+
 service tomcat7 start
-
-display "done."

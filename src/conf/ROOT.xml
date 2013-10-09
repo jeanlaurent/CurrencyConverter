@@ -1,3 +1,4 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Context
-        docBase="/home/vagrant/CurrencyConverter-1.0-SNAPSHOT.war"/>
+	docBase="/vagrant/target/CurrencyConverter-1.0-SNAPSHOT.war"
+/>
