@@ -1,2 +1,4 @@
 #!/bin/sh
-vagrant package factory  --output ~/boxes/factory2.box 
+export CDT=/c/cdt
+
+vagrant package prod  --output $CDT/boxes/factory.box 

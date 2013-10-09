@@ -9,7 +9,10 @@ tomcatroot=/var/lib/tomcat7
 rootfile=src/conf/ROOT.xml
 webapps=$tomcatroot/webapps/
 
-mvn clean install
+if [ ! -f target/$warfile]; then
+	echo "Can't find war file, exiting."
+	exit -1
+fi
 
 scp -F ssh-config-vagrant target/$warfile $vm:~
 scp -F ssh-config-vagrant $rootfile $vm:~
