@@ -3,7 +3,6 @@ package com.sgcib.currencyconverter.converter;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class Money {
-    public static final double MARGIN = 0.0001;
     @JsonProperty public double quantity;
     @JsonProperty public String currency;
 
@@ -29,7 +28,7 @@ public class Money {
         if (o == null || getClass() != o.getClass()) return false;
 
         Money money = (Money) o;
-        if(Math.abs(money.quantity-this.quantity) > MARGIN) return false;
+        if (money.quantity != quantity) return false;
         if (currency != null ? !currency.equals(money.currency) : money.currency != null) return false;
 
         return true;
