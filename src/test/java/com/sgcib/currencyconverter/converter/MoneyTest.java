@@ -7,11 +7,10 @@ import static org.fest.assertions.Assertions.assertThat;
 
 public class MoneyTest {
 
-    @Test
-    public void should_compare_with_error_margin() {
-        Money moneyWithDecimal = new Money(48.000001, "USD");
-        Money moneyWithoutDecimal = new Money(48,"USD");
-        assertThat(moneyWithDecimal).isEqualTo(moneyWithoutDecimal);
-    }
-
+@Test
+    public void shouldCompareEqualsWithAMargin() {
+    Money money1 = new Money(4807,"EUR");
+    Money money2 = new Money(4807.00001,"EUR");
+    assertThat(money1).isEqualTo(money2);
+}
 }
