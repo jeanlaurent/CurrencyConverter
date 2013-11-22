@@ -1,3 +1,0 @@
-[submodule "modules/jenkins"]
-	path = modules/jenkins
-	url = https://github.com/jenkinsci/puppet-jenkins
