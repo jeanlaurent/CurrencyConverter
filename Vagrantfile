@@ -8,11 +8,6 @@ Vagrant.configure("2") do |config|
       factory_config.vm.network :forwarded_port, guest:80, host:8080, autocorrect:true
       factory_config.vm.network :forwarded_port, guest:81, host:9000, autocorrect:true
       factory_config.vm.network :forwarded_port, guest:82, host:4516, autocorrect:true
-      factory_config.vm.provision :puppet do |puppet_config|
-        puppet_config.options = "--verbose --debug"
-        puppet_config.manifest_file = 'factory.pp'
-        puppet_config.module_path = 'modules'
-      end
   end
 
   config.vm.define :target do |target_config|
