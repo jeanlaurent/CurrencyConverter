@@ -3,13 +3,15 @@ package com.sgcib.currencyconverter.converter;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class Money {
-    @JsonProperty public double quantity;
-    @JsonProperty public String currency;
+    @JsonProperty
+    public double quantity;
+    @JsonProperty
+    public String currency;
 
     public Money() {
     }
 
-    public Money( double quantity, String currency) {
+    public Money(double quantity, String currency) {
         this.quantity = quantity;
         this.currency = currency;
     }
@@ -17,9 +19,9 @@ public class Money {
     @Override
     public String toString() {
         return "Money{" +
-            "quantity=" + quantity +
-            ", currency='" + currency + '\'' +
-            '}';
+                "quantity=" + quantity +
+                ", currency='" + currency + '\'' +
+                '}';
     }
 
     @Override
@@ -28,7 +30,8 @@ public class Money {
         if (o == null || getClass() != o.getClass()) return false;
 
         Money money = (Money) o;
-        if (Math.abs(money.quantity - quantity) > 0.00001 ) return false;
+        if (money.quantity != this.quantity)
+            return false;
         if (currency != null ? !currency.equals(money.currency) : money.currency != null) return false;
 
         return true;
